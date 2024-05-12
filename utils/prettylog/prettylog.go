@@ -17,6 +17,12 @@ type Handler struct {
 }
 
 const (
+	envLocal = "local"
+	envDev   = "dev"
+	envProd  = "prod"
+)
+
+const (
 	timeFormat = "2006-01-02 15:04:05"
 
 	reset = "\033[0m"
@@ -142,12 +148,6 @@ func NewHandler(opts *slog.HandlerOptions) *Handler {
 		m: &sync.Mutex{},
 	}
 }
-
-const (
-	envLocal = "local"
-	envDev   = "dev"
-	envProd  = "prod"
-)
 
 func SetupLoggger(env string) *slog.Logger {
 	log := slog.New(NewHandler(nil))
