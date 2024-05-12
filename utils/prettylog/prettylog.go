@@ -142,3 +142,24 @@ func NewHandler(opts *slog.HandlerOptions) *Handler {
 		m: &sync.Mutex{},
 	}
 }
+
+const (
+	envLocal = "local"
+	envDev   = "dev"
+	envProd  = "prod"
+)
+
+func SetupLoggger(env string) *slog.Logger {
+	log := slog.New(NewHandler(nil))
+
+	switch env {
+	case envLocal:
+		log = slog.New(NewHandler(&slog.HandlerOptions{Level: slog.LevelDebug}))
+	case envDev:
+		log = slog.New(NewHandler(&slog.HandlerOptions{Level: slog.LevelInfo}))
+	case envProd:
+		log = slog.New(NewHandler(&slog.HandlerOptions{Level: slog.LevelInfo}))
+	}
+
+	return log
+}
